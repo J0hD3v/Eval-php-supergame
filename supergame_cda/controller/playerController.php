@@ -43,8 +43,8 @@ class PlayerController extends AbstractController {
                 return 'Veuillez remplir tous les champs';
             }
             // Vérifier le format des données
-            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-                return "Format de l'email incorrect";
+            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) || !filter_var($_POST['score'], FILTER_VALIDATE_INT)) {
+                return "Format des données incorrect";
             }
             // Nettoyer les données
             $pseudo = sanitize($_POST['pseudo']);
