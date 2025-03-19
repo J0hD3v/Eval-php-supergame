@@ -56,7 +56,7 @@ class PlayerController extends AbstractController {
             // Vérifier si l'email est disponible
             $data = $this->getModel()->setEmail($email)->getByEmail();
             if ($data) {
-                return "L'email {$data} est déjà utilisé";
+                return "L'email est déjà utilisé";
             }
             // Enregistre l'utilisateur en BDD
             $this->getModel()->setPseudo($pseudo)->setPassword($password)->setScore($score)->add();
@@ -66,7 +66,14 @@ class PlayerController extends AbstractController {
         }
     }
     public function getAllPlayers(): string {
-        $listPlayers = $this->getModel()->getAll();
+        $data = $this->getModel()->getAll();
+        if (gettype($data) == 'string') {
+            $listPlayers = [] ;
+            $displayErrorMessage = true;
+        } else {
+            $listPlayers = $data ;
+            $displayErrorMessage = false;
+        }
         ob_start();
         foreach ($listPlayers as $key => $value) {
             ?>
@@ -84,9 +91,7 @@ class PlayerController extends AbstractController {
                 <?php
             }
         }
-        ?>
-
-        <?php
+        if ($displayErrorMessage) echo $data;
         return ob_get_clean();
     }
     public function render(): void {
