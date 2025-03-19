@@ -92,8 +92,7 @@ class PlayerController extends AbstractController {
     public function render(): void {
         // Traitement des données
         $message = $this->addPlayer();
-        $players = "test"; // -----------------------------
-        $players = $this->getAllPlayers(); // -----------------------------
+        $players = $this->getAllPlayers();
         // Affichage
         echo $this->getHeader()->displayView();
         echo $this->getPlayer()->setSignUpMessage($message)->setPlayersList($players)->displayView();
